@@ -1,18 +1,18 @@
 <h1 align="center">
-  CLEAN ARCHITECTURE TS TEMPLATE
+  CINEANIM ACCOUNT API
 </h1>
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/lyandeveloper/clean-architecture-typescript-template">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/lyandeveloper/Cineanim-Account-API">
   
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/top/lyandeveloper/clean-architecture-typescript-template">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/top/lyandeveloper/Cineanim-Account-API">
 
-  <a href="https://github.com/lyandeveloper/clean-architecture-typescript-template/commits/master">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/lyandeveloper/clean-architecture-typescript-template">
+  <a href="https://github.com/lyandeveloper/Cineanim-Account-API/commits/master">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/lyandeveloper/Cineanim-Account-API">
   </a>
 
-  <a href="https://github.com/lyandeveloper/clean-architecture-typescript-template/issues">
-    <img alt="Repository issues" src="https://img.shields.io/github/issues/lyandeveloper/clean-architecture-typescript-template">
+  <a href="https://github.com/lyandeveloper/Cineanim-Account-API/issues">
+    <img alt="Repository issues" src="https://img.shields.io/github/issues/lyandeveloper/Cineanim-Account-API">
   </a>
 
   <img alt="License" src="https://img.shields.io/badge/license-MIT-brightgreen">
@@ -32,7 +32,7 @@
 
 ## 💻 Project
 
-That's a clean architecture template for your futures projects. You can modify the structure folders wherever you want.<br>
+That's the cineanim account api with its responsability is return user endpoints.<br>
 
 ## Technology
 
