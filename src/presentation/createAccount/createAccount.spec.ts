@@ -26,5 +26,17 @@ describe('CreateAccount', () => {
     expect(httpResponse.status).toEqual(400)
     expect(httpResponse.body.error).toEqual("email is required")
   });
-  
+
+  it('should return 400 if no password is provided', async () => {
+    const httpRequest = {
+      body: { 
+        name: 'any_name', 
+        email: 'any_email'
+      }
+    }
+    const sut = new CreateAccountController()
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse.status).toEqual(400)
+    expect(httpResponse.body.error).toEqual("password is required")
+  });
 });
