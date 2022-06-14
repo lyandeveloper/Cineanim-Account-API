@@ -2,7 +2,7 @@ import { User } from "../../core/entities/User";
 import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
 import { CreateAccountDTO } from "../../core/usecases/createAccount/dtos/createAccountDTO";
 import { MissingParamError } from "../errors/MissingParamError";
-import { badRequest } from "../helpers/http-helper";
+import { badRequest, serverError } from "../helpers/http-helper";
 import { CreateAccountController } from "./createAccount";
 
 
@@ -77,7 +77,7 @@ describe('CreateAccount', () => {
         email: 'any_email',
         password: 'any_password'
       }
-      
+
     }
     const { sut, createAccount } = makeSut();
     jest.spyOn(createAccount, 'create').mockImplementationOnce(
@@ -85,9 +85,6 @@ describe('CreateAccount', () => {
     )
 
     const httpResponse = await sut.handle(httpRequest) 
-    expect(httpResponse).toEqual({
-      body: 'serverError',
-      status: 500
-    })
+    expect(httpResponse).toEqual(serverError())
   });
 });

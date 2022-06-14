@@ -1,6 +1,6 @@
 import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
 import { MissingParamError } from "../errors/MissingParamError";
-import { badRequest } from "../helpers/http-helper";
+import { badRequest, serverError } from "../helpers/http-helper";
 import { Controller } from "../http/controller";
 import { httpRequest, httpResponse } from "../http/http";
 
@@ -31,11 +31,8 @@ export class CreateAccountController implements Controller {
       }
     } catch(error) {
       console.error(error);
-      
-      return {
-        status: 500,
-        body: 'serverError'
-      }
+
+      return serverError()
     }
   }
 } 
