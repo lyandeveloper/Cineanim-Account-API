@@ -1,3 +1,5 @@
+import { MissingParamError } from "../errors/MissingParamError";
+import { badRequest } from "../helpers/http-helper";
 import { CreateAccountController } from "./createAccount";
 
 
@@ -17,8 +19,7 @@ describe('CreateAccount', () => {
     };
     const { sut } = makeSut();
     const httpResponse = await sut.handle(httpRequest);
-    expect(httpResponse.status).toEqual(400);
-    expect(httpResponse.body.error).toEqual("name is required");
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('name')));
   });
 
   it('should return 400 if no email is provided', async () => {
@@ -29,9 +30,8 @@ describe('CreateAccount', () => {
       }
     }
     const { sut } = makeSut();
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.status).toEqual(400)
-    expect(httpResponse.body.error).toEqual("email is required")
+    const httpResponse = await sut.handle(httpRequest) 
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
   });
 
   it('should return 400 if no password is provided', async () => {
@@ -42,8 +42,7 @@ describe('CreateAccount', () => {
       }
     }
     const { sut } = makeSut();
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse.status).toEqual(400)
-    expect(httpResponse.body.error).toEqual("password is required")
+    const httpResponse = await sut.handle(httpRequest) 
+    expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
   });
 });

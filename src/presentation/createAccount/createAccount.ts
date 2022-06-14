@@ -1,3 +1,5 @@
+import { MissingParamError } from "../errors/MissingParamError";
+import { badRequest } from "../helpers/http-helper";
 import { Controller } from "../http/controller";
 import { httpRequest, httpResponse } from "../http/http";
 
@@ -9,13 +11,13 @@ export class CreateAccountController implements Controller {
 
     for(let field of requiredFields) {
       if(!request.body[field]) {
-        return {
-            status: 400,
-            body: {
-              error: `${field} is required`
-            }
-          }
-        }
-      }
+        return badRequest(new MissingParamError(field))
+      } 
+    }
+
+    return {
+      status: 201,
+      body: 'success'
+    }
   }
 } 
