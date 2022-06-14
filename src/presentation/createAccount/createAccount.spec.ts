@@ -1,12 +1,36 @@
+import { User } from "../../core/entities/User";
+import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
+import { CreateAccountDTO } from "../../core/usecases/createAccount/dtos/createAccountDTO";
 import { MissingParamError } from "../errors/MissingParamError";
 import { badRequest } from "../helpers/http-helper";
 import { CreateAccountController } from "./createAccount";
 
 
-const makeSut = () => {
-  const sut = new CreateAccountController();
+const makeCreateAccount = () => {
+  class CreateAccountStub extends CreateAccount {
+    public async create(user: CreateAccountDTO): Promise<User> {
+      const fakeData = {
+        id: 'any_id',
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_password',
+        createdAt: 'any_create_at',
+        updatedAt: 'any_updated_at'
+      }
 
-  return { sut }
+      return new Promise(resolve  => resolve(fakeData))
+    }
+
+  }
+
+  return new CreateAccountStub();
+}
+
+const makeSut = () => {
+  const createAccount = makeCreateAccount()
+  const sut = new CreateAccountController(createAccount);
+
+  return { sut, createAccount }
 }
 
 describe('CreateAccount', () => {
@@ -44,5 +68,26 @@ describe('CreateAccount', () => {
     const { sut } = makeSut();
     const httpResponse = await sut.handle(httpRequest) 
     expect(httpResponse).toEqual(badRequest(new MissingParamError('password')))
+  });
+
+  it('should return 500 if CreateAccount throws', async () => {
+    const httpRequest = {
+      body: { 
+        name: 'any_name', 
+        email: 'any_email',
+        password: 'any_password'
+      }
+      
+    }
+    const { sut, createAccount } = makeSut();
+    jest.spyOn(createAccount, 'create').mockImplementationOnce(
+      async () => new Promise((resolve, reject) => reject(new Error()))
+    )
+
+    const httpResponse = await sut.handle(httpRequest) 
+    expect(httpResponse).toEqual({
+      body: 'serverError',
+      status: 500
+    })
   });
 });
