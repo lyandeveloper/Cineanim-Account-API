@@ -1,8 +1,8 @@
-import { User } from "../../core/entities/User";
-import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
-import { CreateAccountDTO } from "../../core/usecases/createAccount/dtos/createAccountDTO";
-import { MissingParamError } from "../errors/MissingParamError";
-import { badRequest, serverError, success } from "../helpers/http-helper";
+import { User } from "../../../core/entities/User";
+import { CreateAccount } from "../../../core/usecases/createAccount/createAccount";
+import { CreateAccountDTO } from "../../../core/usecases/createAccount/dtos/createAccountDTO";
+import { MissingParamError } from "../../errors/MissingParamError";
+import { badRequest, serverError, success } from "../../helpers/http-helper";
 import { CreateAccountController } from "./createAccount";
 
 
