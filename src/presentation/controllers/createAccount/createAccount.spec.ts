@@ -1,10 +1,27 @@
 import { User } from "../../../core/entities/User";
 import { CreateAccount } from "../../../core/usecases/createAccount/createAccount";
 import { CreateAccountDTO } from "../../../core/usecases/createAccount/dtos/createAccountDTO";
+import { InvalidParamError } from "../../errors/InvalidParamError";
 import { MissingParamError } from "../../errors/MissingParamError";
 import { badRequest, serverError, success } from "../../helpers/http-helper";
+import { EmailValidator } from "../../protocols/email-validator";
 import { CreateAccountController } from "./createAccount";
 
+type SutTypes = {
+  sut: CreateAccountController
+  createAccount: CreateAccount
+  emailValidator: EmailValidator
+}
+
+const makeEmailValidator = (): EmailValidator => {
+  class EmailValidatorStub implements EmailValidator {
+    isValid(email: string): boolean {
+      return true
+    }
+  }
+
+  return new EmailValidatorStub()
+}
 
 const makeCreateAccount = () => {
   class CreateAccountStub extends CreateAccount {
@@ -37,11 +54,12 @@ const makeFakeData = () => {
   }
 }
 
-const makeSut = () => {
+const makeSut = (): SutTypes => {
   const createAccount = makeCreateAccount()
-  const sut = new CreateAccountController(createAccount);
+  const emailValidator = makeEmailValidator()
+  const sut = new CreateAccountController(createAccount, emailValidator);
 
-  return { sut, createAccount }
+  return { sut, createAccount, emailValidator }
 }
 
 describe('CreateAccount', () => {
@@ -97,6 +115,22 @@ describe('CreateAccount', () => {
 
     const httpResponse = await sut.handle(httpRequest) 
     expect(httpResponse).toEqual(serverError())
+  });
+
+  it('should return 400 if a invalid email is provided', async () => {
+    const httpRequest = {
+      body: { 
+        name: 'any_name', 
+        email: 'invalid_email',
+        password: 'any_password'
+      }
+    } 
+    const { sut, emailValidator } = makeSut()
+
+    jest.spyOn(emailValidator, 'isValid').mockReturnValueOnce(false)
+
+    const httpResponse = await sut.handle(httpRequest)
+    expect(httpResponse).toEqual(badRequest(new InvalidParamError('email')))
   });
 
   it('should return 201 if correct data is provided', async () => {
