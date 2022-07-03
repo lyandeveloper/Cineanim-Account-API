@@ -1,8 +1,8 @@
-import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
-import { MissingParamError } from "../errors/MissingParamError";
-import { badRequest, serverError, success } from "../helpers/http-helper";
-import { Controller } from "../http/controller";
-import { httpRequest, httpResponse } from "../http/http";
+import { CreateAccount } from "../../../core/usecases/createAccount/createAccount";
+import { MissingParamError } from "../../errors/MissingParamError";
+import { badRequest, serverError, success } from "../../helpers/http-helper";
+import { Controller } from "../../http/controller"; 
+import { httpRequest, httpResponse } from "../../http/http";
 
 export class CreateAccountController implements Controller {
   constructor(private readonly createAccount: CreateAccount) {}
