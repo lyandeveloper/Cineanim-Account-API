@@ -2,7 +2,7 @@ import { User } from "../../core/entities/User";
 import { CreateAccount } from "../../core/usecases/createAccount/createAccount";
 import { CreateAccountDTO } from "../../core/usecases/createAccount/dtos/createAccountDTO";
 import { MissingParamError } from "../errors/MissingParamError";
-import { badRequest, serverError } from "../helpers/http-helper";
+import { badRequest, serverError, success } from "../helpers/http-helper";
 import { CreateAccountController } from "./createAccount";
 
 
@@ -24,6 +24,17 @@ const makeCreateAccount = () => {
   }
 
   return new CreateAccountStub();
+}
+
+const makeFakeData = () => {
+  return {
+        id: 'any_id',
+        name: 'any_name',
+        email: 'any_email',
+        password: 'any_password',
+        createdAt: 'any_create_at',
+        updatedAt: 'any_updated_at'
+  }
 }
 
 const makeSut = () => {
@@ -86,5 +97,20 @@ describe('CreateAccount', () => {
 
     const httpResponse = await sut.handle(httpRequest) 
     expect(httpResponse).toEqual(serverError())
+  });
+
+  it('should return 201 if correct data is provided', async () => {
+    const httpRequest = {
+      body: { 
+        name: 'any_name', 
+        email: 'any_email',
+        password: 'any_password'
+      }
+
+    }
+    const { sut } = makeSut(); 
+
+    const httpResponse = await sut.handle(httpRequest) 
+    expect(httpResponse).toEqual(success(makeFakeData()))
   });
 });
