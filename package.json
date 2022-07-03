@@ -23,6 +23,8 @@
   "dependencies": {},
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "typecheck": "tsc --project tsconfig.json --pretty --noEmit",
+    "lint": "eslint --ext ts --ext tsx"
   }
 }
