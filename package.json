@@ -22,6 +22,8 @@
   "dependencies": {},
   "scripts": {
     "prepare": "husky install",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "typecheck": "yarn tsc",
+    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
   }
 }
