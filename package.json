@@ -27,6 +27,6 @@
     "prepare": "husky install",
     "test": "jest --passWithNoTests",
     "typecheck": "yarn tsc",
-    "lint": "eslint ./src --ext .js,.jsx,.ts,.tsx"
+    "lint": "eslint"
   }
 }
